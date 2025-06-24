@@ -5,6 +5,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loading from "../../components/Loading";
 import toast from "react-hot-toast";
 import { useRef } from "react";
+import { queryClient } from "../../main";
 
 const Roadmap = ({ roadmap }) => {
   const {user} = useAuth();
@@ -22,6 +23,7 @@ const Roadmap = ({ roadmap }) => {
       });
       toast.success(data?.message);
       btnRef.current.disabled = true;
+      queryClient.invalidateQueries({queryKey: ["roadmaps"]})
     },
     onError: err => {
       toast.error(err.response.data.message || 'Something went wrong')
