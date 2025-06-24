@@ -35,4 +35,8 @@
     button {
         @apply cursor-pointer;
     }
+
+    button:disabled {
+        @apply text-gray-500 cursor-not-allowed;
+    }
 }
