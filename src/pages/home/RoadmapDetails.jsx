@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import { FaCommentAlt } from "react-icons/fa";
+import { FaCommentAlt, FaRegUserCircle } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import { MdHowToVote } from "react-icons/md";
 import { useParams } from "react-router";
@@ -35,7 +35,7 @@ const RoadmapDetails = () => {
     queryKey: ["comments"],
     enabled: !!open,
     queryFn: async () => {
-      const { data } = await axiosSecure("/comments");
+      const { data } = await axiosSecure(`/comments/${id}`);
       return data.data || [];
     },
   });
@@ -71,6 +71,7 @@ const RoadmapDetails = () => {
       toast.error(err.response.data.message || "Something went wrong");
     },
   });
+
   const handleVote = async () => {
     await mutateAsync();
   };
@@ -83,6 +84,20 @@ const RoadmapDetails = () => {
         <Loading />
       </div>
     );
+  }
+
+  const handleComment = async e => {
+    e.preventDefault();
+
+    const text = e.target.comment.value;
+
+    const data = {
+        text,
+        author: user._id,
+        roadmap: id
+    }
+
+    await postComment(data);
   }
 
   const handleChange = (e) => {
@@ -140,18 +155,25 @@ const RoadmapDetails = () => {
         {/* comment section */}
         <hr className="my-6" />
         <div>
-          <div className="flex justify-between">
-            <input
-              className="input rounded-r-none"
-              type="text"
-              name="comment"
-              placeholder="Leave a comment"
-              onChange={handleChange}
-            />
-            <button ref={sendRef} disabled className="btn rounded-l-none">
-              Send <IoSend />
-            </button>
-          </div>
+          <form onSubmit={handleComment}>
+            <div className="flex justify-between">
+              <input
+                className="input rounded-r-none"
+                type="text"
+                name="comment"
+                placeholder="Leave a comment"
+                onChange={handleChange}
+              />
+              <button
+                type="submit"
+                ref={sendRef}
+                disabled={isCommenting || true}
+                className="btn rounded-l-none"
+              >
+                Send <IoSend />
+              </button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -164,6 +186,34 @@ const RoadmapDetails = () => {
           <h2 className="font-bold text-2xl">
             Comments: {comments.length || 0}
           </h2>
+          <hr className="my-3" />
+
+          {commentComing ? (
+            <div className="flex-center">
+              <Loading />
+            </div>
+          ) : comments.length === 0 ? (
+            <p>No comments here...</p>
+          ) : (
+            <div className="flex flex-col gap-6">
+              {comments.map((comment) => (
+                <div key={comment?._id} className="flex gap-4 items-center">
+                  <div>
+                    <FaRegUserCircle size={40} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold">{comment?.author?.name}</h3>
+                    <p
+                      className="text-sm
+                              "
+                    >
+                      {comment?.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
