@@ -5,11 +5,10 @@ import useAuth from "./hooks/useAuth";
 import Loader from "./components/Loader";
 
 function App() {
-  const {user, loading} = useAuth();
-  console.log(loading);
+  const { loading } = useAuth();
 
-  if(loading) {
-    return <Loader />
+  if (loading) {
+    return <Loader />;
   }
   return (
     <>
