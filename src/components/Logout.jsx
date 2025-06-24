@@ -5,12 +5,14 @@ import { IoIosLogOut } from "react-icons/io";
 import { axiosSecure } from "../hooks/useAxiosSecure";
 import Loading from "./Loading";
 import { useNavigate } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const Logout = () => {
   const [click, setClick] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
-  const {isLoading} = useQuery({
+  const { isLoading } = useQuery({
     queryKey: ["logoutFn", click],
     enabled: click,
     queryFn: async () => {
@@ -18,13 +20,14 @@ const Logout = () => {
         const { data } = await axiosSecure("/auth/logout");
         if (data?.success) {
           toast.success(data?.message);
-          navigate('/auth/login')
+          setUser(null);
+          navigate("/auth/login");
         }
         return data;
       } catch (error) {
         toast.error(
           error?.response?.data?.message ||
-          "Something went wrong during logout!"
+            "Something went wrong during logout!"
         );
         return error;
       }
