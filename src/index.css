@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+    --color-main: #8E2DE2;
+}
+
+@layer components {
+    .input {
+        @apply border px-5 py-2 rounded-md focus:outline-2 outline-offset-2 transition-all duration-500 w-full;
+    }
+
+    .btn {
+        @apply border px-6 py-2 rounded-md;
+    }
+}
