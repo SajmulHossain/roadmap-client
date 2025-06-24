@@ -1,20 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import Roadmap from "./Roadmap";
 
 
 const Roadmaps = () => {
   const axiosSecure = useAxiosSecure();
-    const { data = [], isLoading } = useQuery({
+    const { data:roadmaps = [], isLoading } = useQuery({
       queryKey: ["roadmaps"],
       queryFn: async () => {
           const { data } = await axiosSecure("/roadmaps");
-          return data || [];
+          return data.data || [];
       },
     });
+
+    console.log(roadmaps);
     return (
         <section>
-            
+            {
+              roadmaps.map(roadmap => <Roadmap key={roadmap._id} roadmap={roadmap} />)
+            }
         </section>
     );
 };
