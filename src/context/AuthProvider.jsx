@@ -19,7 +19,8 @@ useEffect(() => {
 
   const data = {
     loading,
-    user
+    user,
+    setUser
   };
   return <AuthContext.Provider value={data}>{children}</AuthContext.Provider>;
 };

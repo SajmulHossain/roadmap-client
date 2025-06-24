@@ -15,7 +15,7 @@ const useAxiosSecure = () => {
       (res) => res,
       async (error) => {
         if (error.response?.status === 401 || error.response?.status === 403) {
-          await axiosSecure("/api/logout");
+          await axiosSecure("/auth/logout").then(data => toast.success(data.data.message)).catch(err => toast.error(err?.message || "Something went wrong"))
           toast.error("Unauthorized access identified!");
         }
         return Promise.reject(error);

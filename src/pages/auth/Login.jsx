@@ -2,8 +2,10 @@ import toast from "react-hot-toast";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
+    const {setUser} = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { mutateAsync, isPending } = useMutation({
@@ -28,6 +30,7 @@ const Login = () => {
     try {
       const data = await mutateAsync(body);
       toast.success(data?.message);
+      setUser(data.data);
       navigate('/')
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something Went Wrong");
