@@ -86,19 +86,19 @@ const RoadmapDetails = () => {
     );
   }
 
-  const handleComment = async e => {
+  const handleComment = async (e) => {
     e.preventDefault();
 
     const text = e.target.comment.value;
 
     const data = {
-        text,
-        author: user._id,
-        roadmap: id
-    }
+      text,
+      author: user._id,
+      roadmap: id,
+    };
 
     await postComment(data);
-  }
+  };
 
   const handleChange = (e) => {
     if (e.target.value.length === 0) {
