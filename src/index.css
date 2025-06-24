@@ -1,44 +1,44 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @theme {
-    --color-main: #4A0D67;
-    --color-sec: #04E762;
+  --color-main: #4a0d67;
+  --color-sec: #04e762;
 }
 
 @layer components {
-    .input {
-        @apply border px-5 py-2 rounded-md focus:outline-2 outline-offset-2 transition-all duration-500 w-full;
-    }
+  .input {
+    @apply border px-5 py-2 rounded-md focus:outline-2 outline-offset-2 transition-all duration-500 w-full;
+  }
 
-    .flex-center {
-        @apply flex justify-center items-center;
-    }
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
 
-    .btn {
-        @apply border px-6 py-2 rounded-md flex gap-2 justify-center items-center;
-    }
+  .btn {
+    @apply border px-6 py-2 rounded-md flex gap-2 justify-center items-center;
+  }
 
-    .section {
-        @apply max-w-[1280px] px-4 py-7 my-7 mx-auto;
-    }
+  .section {
+    @apply max-w-[1280px] px-4 py-7 my-7 mx-auto;
+  }
 
-    .skeleton {
-        @apply h-60 animate-pulse bg-gray-400 rounded-md;
-    }    
+  .skeleton {
+    @apply h-60 animate-pulse bg-gray-400 rounded-md;
+  }
 }
 
 @layer base {
-    body {
-        @apply overflow-y-scroll;
-        font-family: "Poppins", sans-serif;
-    }
+  body {
+    @apply overflow-y-scroll;
+    font-family: "Poppins", sans-serif;
+  }
 
-    button {
-        @apply cursor-pointer;
-    }
+  button {
+    @apply cursor-pointer;
+  }
 
-    button:disabled {
-        @apply text-gray-500 cursor-not-allowed;
-    }
+  button:disabled {
+    @apply text-gray-500 cursor-not-allowed;
+  }
 }
