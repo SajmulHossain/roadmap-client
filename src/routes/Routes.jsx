@@ -4,6 +4,7 @@ import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import PrivetRoute from "./PrivetRoute";
+import RoadmapDetails from "../pages/home/RoadmapDetails";
 
 const routes = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const routes = createBrowserRouter([
             <Home />
           </PrivetRoute>
         ),
+      },
+      {
+        path: "/roadmap/:id",
+        element: <RoadmapDetails />,
       },
       {
         path: "/auth/login",

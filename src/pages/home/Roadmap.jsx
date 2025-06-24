@@ -1,13 +1,14 @@
-import { MdHowToVote } from "react-icons/md";
-import useAuth from "../../hooks/useAuth";
-import { useMutation } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import Loading from "../../components/Loading";
-import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
-import { queryClient } from "../../main";
+import toast from "react-hot-toast";
+import { MdHowToVote } from "react-icons/md";
+import Loading from "../../components/Loading";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Link } from "react-router";
 
 const Roadmap = ({ roadmap }) => {
+  const queryClient = useQueryClient();
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure();
   const btnRef = useRef();
@@ -35,18 +36,18 @@ const Roadmap = ({ roadmap }) => {
   const isVoted= upvotes.find(vote => vote.user === user?.email);
 
   return (
-    <div className="rounded-md border p-4 flex flex-col justify-between">
+    <Link to={`/roadmap/${_id}`} className="rounded-md border p-4 flex flex-col justify-between">
       <h3 className="font-bold text-2xl mb-4">{title}</h3>
       {description && <p className="mb-3">{description}</p>}
 
       <div className="flex items-center justify-between">
         <p className="flex items-center gap-4">
+            <span className="bg-sec w-6 h-6 rounded-full flex-center">{upvotes.length}</span>
           <button ref={btnRef} disabled={!!isVoted} onClick={handleVote}>
             {
               isPending ? <Loading /> : <MdHowToVote size={30} />
             }
           </button>
-          <span className="bg-sec w-6 h-6 rounded-full flex-center">{upvotes.length}</span>
         </p>
         <div className="flex gap-4 items-center">
           <p className="capitalize bg-main w-fit px-3 py-0.5 text-white rounded-full">
@@ -65,7 +66,7 @@ const Roadmap = ({ roadmap }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
