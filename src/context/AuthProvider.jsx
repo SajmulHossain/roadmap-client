@@ -11,10 +11,10 @@ const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       const { data } = await axiosSecure("/auth");
       setUser(data.data);
+      setLoading(false);
     };
     
     fetchUser();
-    setLoading(false);
   }, [axiosSecure]);
 
   const data = {
