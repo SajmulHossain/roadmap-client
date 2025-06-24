@@ -1,10 +1,12 @@
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
     const axiosSecure = useAxiosSecure();
+    const {user} = useAuth();
     const navigate = useNavigate();
     const { mutateAsync, isPending } = useMutation({
       mutationKey: ["login"],
@@ -13,6 +15,10 @@ const SignUp = () => {
         return data;
       },
     });
+
+    if (user) {
+      return <Navigate to="/" replace={true} />;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();

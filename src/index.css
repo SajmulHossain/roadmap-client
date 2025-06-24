@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-    --color-main: #8E2DE2;
+    --color-main: #4A0D67;
+    --color-sec: #04E762;
 }
 
 @layer components {
@@ -14,12 +15,24 @@
     }
 
     .section {
-        @apply max-w-[1280px] px-4 py-7 my-7;
+        @apply max-w-[1280px] px-4 py-7 my-7 mx-auto;
+    }
+
+    .skeleton {
+        @apply h-60 animate-pulse bg-gray-400 rounded-md;
+    }
+
+    .flex-center {
+        @apply flex justify-center items-center;
     }
 }
 
 @layer base {
     body {
         @apply overflow-y-scroll;
+    }
+
+    button {
+        @apply cursor-pointer;
     }
 }

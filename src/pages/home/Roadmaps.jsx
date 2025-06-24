@@ -5,7 +5,7 @@ import Roadmap from "./Roadmap";
 
 const Roadmaps = () => {
   const axiosSecure = useAxiosSecure();
-    const { data:roadmaps = [], isLoading } = useQuery({
+    const { data:roadmaps = [...Array(9)], isLoading } = useQuery({
       queryKey: ["roadmaps"],
       queryFn: async () => {
           const { data } = await axiosSecure("/roadmaps");
@@ -13,13 +13,16 @@ const Roadmaps = () => {
       },
     });
 
-    console.log(roadmaps);
+    
     return (
-        <section>
-            {
-              roadmaps.map(roadmap => <Roadmap key={roadmap._id} roadmap={roadmap} />)
-            }
-        </section>
+      <section className="section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {isLoading
+          ? 
+            roadmaps.map((_, idx) => <div key={idx} className="skeleton"></div>)
+          : roadmaps.map((roadmap) => (
+              <Roadmap key={roadmap._id} roadmap={roadmap} />
+            ))}
+      </section>
     );
 };
 
