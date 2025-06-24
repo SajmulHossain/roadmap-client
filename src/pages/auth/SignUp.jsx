@@ -3,6 +3,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
+import Loading from "../../components/Loading";
 
 const SignUp = () => {
     const axiosSecure = useAxiosSecure();
@@ -76,7 +77,7 @@ const SignUp = () => {
               className="btn my-4 w-full"
               type="submit"
             >
-              Create Account
+              Create Account {isPending && <Loading />}
             </button>
             <hr />
             <p className="mt-2 text-sm">

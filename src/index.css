@@ -10,8 +10,12 @@
         @apply border px-5 py-2 rounded-md focus:outline-2 outline-offset-2 transition-all duration-500 w-full;
     }
 
+    .flex-center {
+        @apply flex justify-center items-center;
+    }
+
     .btn {
-        @apply border px-6 py-2 rounded-md;
+        @apply border px-6 py-2 rounded-md flex gap-2 justify-center items-center;
     }
 
     .section {
@@ -20,11 +24,7 @@
 
     .skeleton {
         @apply h-60 animate-pulse bg-gray-400 rounded-md;
-    }
-
-    .flex-center {
-        @apply flex justify-center items-center;
-    }
+    }    
 }
 
 @layer base {
