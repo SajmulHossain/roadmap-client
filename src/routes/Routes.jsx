@@ -5,11 +5,13 @@ import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import PrivetRoute from "./PrivetRoute";
 import RoadmapDetails from "../pages/home/RoadmapDetails";
+import NotFound from "../pages/404/NotFound";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,

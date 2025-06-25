@@ -5,7 +5,7 @@ const Reply = ({ reply, setOpen, isDisabled }) => {
   const { author, text, createdAt } = reply || {};
 
   return (
-    <div className="flex gap-4 mt-6">
+    <div className="flex gap-4">
       <div>
         <FaRegUserCircle size={30} />
       </div>

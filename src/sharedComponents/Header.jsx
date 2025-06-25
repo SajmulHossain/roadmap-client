@@ -40,9 +40,9 @@ const Header = () => {
       </>
     );
     return (
-      <header className="bg-black text-white py-3">
+      <header className="bg-black text-white py-3 sticky top-0">
         <section className="section py-0 my-0 flex justify-between">
-          <div className="flex flex-row-reverse gap-4 items-center">
+          <div className="flex flex-row-reverse gap-1 sm:gap-4 items-center">
             <h3>Roadmap App</h3>
             <button
               className="md:hidden cursor-pointer"
@@ -57,13 +57,13 @@ const Header = () => {
           </nav>
 
           {user && (
-            <div className="flex items-center gap-6">
-              <p>Welcome {user?.name}</p> <Logout />
+            <div className="flex items-center gap-2 sm:gap-6">
+              <p className="line-clamp-1">{user?.name}</p> <Logout />
             </div>
           )}
 
           <ul
-            className={`absolute top-12 bg-black h-full px-10 z-50 py-6 ${
+            className={`absolute top-12 bg-black h-screen px-10 z-50 py-6 ${
               open ? "left-0" : "right-full"
             } transition duration-200 ease-in`}
           >
