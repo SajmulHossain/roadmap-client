@@ -174,7 +174,7 @@ const RoadmapDetails = () => {
                 disabled={isCommenting || true}
                 className="btn rounded-l-none"
               >
-                Send <IoSend />
+                Send {isCommenting ? <Loading /> : <IoSend />}
               </button>
             </div>
           </form>
