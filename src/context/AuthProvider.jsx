@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import AuthContext from "./AuthContext";
+import toast from "react-hot-toast";
 
 const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
@@ -9,9 +10,14 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      try {
       const { data } = await axiosSecure("/auth");
       setUser(data.data);
-      setLoading(false);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong!");
+    } finally {
+        setLoading(false);
+      }
     };
     
     fetchUser();

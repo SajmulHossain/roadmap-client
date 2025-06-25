@@ -8,6 +8,7 @@ import { useParams } from "react-router";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import CommentBox from "../../components/CommentBox";
 
 const RoadmapDetails = () => {
   const { id } = useParams();
@@ -58,10 +59,10 @@ const RoadmapDetails = () => {
   } = roadmap || {};
 
   const { mutateAsync, isPending } = useMutation({
-    mutationKey: ["vote", user.email],
+    mutationKey: ["vote", user?.email],
     mutationFn: async () => {
       const { data } = await axiosSecure.post(`/roadmaps/vote/${_id}`, {
-        email: user.email,
+        email: user?.email,
       });
       toast.success(data?.message);
       btnRef.current.disabled = true;
@@ -139,12 +140,12 @@ const RoadmapDetails = () => {
               {category}
             </p>
             <p
-              className={`capitalize bg-${
+              className={`capitalize ${
                 status === "planned"
-                  ? "amber-700"
+                  ? "bg-red-600"
                   : status === "in_progress"
-                  ? "blue-700"
-                  : "sec"
+                  ? "bg-blue-700"
+                  : "bg-sec"
               } w-fit px-3 py-0.5 text-white rounded-full`}
             >
               {status === "in_progress" ? "In Progress" : status}
@@ -197,20 +198,7 @@ const RoadmapDetails = () => {
           ) : (
             <div className="flex flex-col gap-6">
               {comments.map((comment) => (
-                <div key={comment?._id} className="flex gap-4 items-center">
-                  <div>
-                    <FaRegUserCircle size={40} />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">{comment?.author?.name}</h3>
-                    <p
-                      className="text-sm
-                              "
-                    >
-                      {comment?.text}
-                    </p>
-                  </div>
-                </div>
+                <CommentBox key={comment._id} comment={comment} />
               ))}
             </div>
           )}

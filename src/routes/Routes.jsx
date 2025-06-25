@@ -21,7 +21,11 @@ const routes = createBrowserRouter([
       },
       {
         path: "/roadmap/:id",
-        element: <RoadmapDetails />,
+        element: (
+          <PrivetRoute>
+            <RoadmapDetails />
+          </PrivetRoute>
+        ),
       },
       {
         path: "/auth/login",

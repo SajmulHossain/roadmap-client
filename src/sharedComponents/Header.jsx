@@ -12,6 +12,7 @@ const Header = () => {
       <>
         <li>
           <NavLink
+          onClick={() => setOpen(false)}
             to="/"
             className={({ isActive }) => (isActive ? "text-sec" : "")}
           >
@@ -20,6 +21,7 @@ const Header = () => {
         </li>
         <li>
           <NavLink
+          onClick={() => setOpen(false)}
             to="/auth/login"
             className={({ isActive }) => (isActive ? "text-sec" : "")}
           >
@@ -28,6 +30,7 @@ const Header = () => {
         </li>
         <li>
           <NavLink
+          onClick={() => setOpen(false)}
             to="/auth/sign-up"
             className={({ isActive }) => (isActive ? "text-sec" : "")}
           >
@@ -62,7 +65,7 @@ const Header = () => {
           <ul
             className={`absolute top-12 bg-black h-full px-10 z-50 py-6 ${
               open ? "left-0" : "right-full"
-            } transition-all duration-200 ease-in`}
+            } transition duration-200 ease-in`}
           >
             {links}
           </ul>

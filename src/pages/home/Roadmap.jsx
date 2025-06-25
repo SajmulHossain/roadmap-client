@@ -54,21 +54,21 @@ const Roadmap = ({ roadmap }) => {
           </button>
         </p>
 
-        <button>
+        <button className="hidden lg:block">
           <FaCommentAlt size={28} className="text-main" />
         </button>
 
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-1 lg:gap-4 items-center">
           <p className="capitalize bg-main w-fit px-3 py-0.5 text-white rounded-full">
             {category}
           </p>
           <p
-            className={`capitalize bg-${
+            className={`capitalize ${
               status === "planned"
-                ? "amber-700"
+                ? "bg-red-600"
                 : status === "in_progress"
-                ? "blue-700"
-                : "sec"
+                ? "bg-blue-700"
+                : "bg-sec"
             } w-fit px-3 py-0.5 text-white rounded-full`}
           >
             {status === "in_progress" ? "In Progress" : status}
