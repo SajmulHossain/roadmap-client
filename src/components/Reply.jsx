@@ -1,11 +1,14 @@
 import { formatDistanceToNowStrict } from "date-fns";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
+import useAuth from "../hooks/useAuth";
 
 const Reply = ({ reply, setOpen, isDisabled }) => {
+  const {user} = useAuth();
   const { author, text, createdAt } = reply || {};
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 relative">
       <div>
         <FaRegUserCircle size={30} />
       </div>
@@ -26,6 +29,14 @@ const Reply = ({ reply, setOpen, isDisabled }) => {
           </button>
         </div>
       </div>
+
+      {user?._id === author._id && (
+        <>
+          <button className="absolute top-4 right-3">
+            <BsThreeDotsVertical />
+          </button>
+        </>
+      )}
     </div>
   );
 };
