@@ -48,7 +48,7 @@ const CommentBox = ({ comment }) => {
         <div className="ml-4 flex gap-4 items-center text-sm mt-1 text-gray-600">
           <p>{formatDistanceToNowStrict(new Date(createdAt))} ago</p>
 
-          <button onClick={() => setOpen(!open)}>Reply</button>
+          <button disabled={replies.length >= 3} onClick={() => setOpen(!open)} className={`${replies.length >= 3 ? 'line-through': ''}`}>Reply</button>
         </div>
 
         <div className="flex flex-col gap-3 md:ml-3">
@@ -57,6 +57,7 @@ const CommentBox = ({ comment }) => {
               key={reply.createdAt || reply.updatedAt}
               reply={reply}
               setOpen={setOpen}
+              isDisabled = {replies.length >= 3}
             />
           ))}
         </div>

@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { IoSend } from "react-icons/io5";
+import Loading from "./Loading";
 
 const ReplyBox = ({ open, reply }) => {
   const sendRef = useRef(null);
@@ -38,7 +39,7 @@ const ReplyBox = ({ open, reply }) => {
             disabled={isReplying || true}
             className="btn rounded-l-none"
           >
-            Reply <IoSend />
+            Reply {isReplying ? <Loading /> : <IoSend />}
           </button>
         </div>
       </form>

@@ -19,6 +19,7 @@ const Reply = ({ reply, setOpen, isDisabled }) => {
 
           <button
             disabled={isDisabled}
+            className={`${isDisabled ? "line-through" : ""}`}
             onClick={() => setOpen((open) => !open)}
           >
             Reply
