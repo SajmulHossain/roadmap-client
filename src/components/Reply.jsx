@@ -1,23 +1,28 @@
 import { formatDistanceToNowStrict } from "date-fns";
 import { FaRegUserCircle } from "react-icons/fa";
 
-const Reply = ({ reply, setOpen }) => {
+const Reply = ({ reply, setOpen, isDisabled }) => {
   const { author, text, createdAt } = reply || {};
-  
+
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 mt-6">
       <div>
-        <FaRegUserCircle size={40} />
+        <FaRegUserCircle size={30} />
       </div>
       <div className="w-full">
         <div className="w-full bg-main/20 p-3 rounded-2xl">
-          <h3 className="font-semibold">{author?.name}</h3>
-          <p className="text-base mt-1">{text}</p>
+          <h3 className="font-semibold text-sm">{author?.name}</h3>
+          <p className="text-sm mt-1">{text}</p>
         </div>
-        <div className="ml-4 flex gap-4 items-center text-sm mt-1 text-gray-600">
+        <div className="ml-4 flex gap-4 items-center text-xs mt-1 text-gray-600">
           <p>{formatDistanceToNowStrict(new Date(createdAt))} ago</p>
 
-          <button onClick={() => setOpen((open) => !open)}>Reply</button>
+          <button
+            disabled={isDisabled}
+            onClick={() => setOpen((open) => !open)}
+          >
+            Reply
+          </button>
         </div>
       </div>
     </div>

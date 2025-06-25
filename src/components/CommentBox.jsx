@@ -25,8 +25,9 @@ const CommentBox = ({ comment }) => {
         author: user?._id,
       });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
+    onSuccess:async () => {
+     await queryClient.invalidateQueries({ queryKey: ["comments"] });
+      setOpen(false);
     },
     onError: (error) => {
       toast.error(
@@ -35,7 +36,7 @@ const CommentBox = ({ comment }) => {
     },
   });
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 border p-2 md:p-3 rounded-md">
       <div>
         <FaRegUserCircle size={40} />
       </div>
@@ -50,7 +51,7 @@ const CommentBox = ({ comment }) => {
           <button onClick={() => setOpen(!open)}>Reply</button>
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 md:ml-3">
+        <div className="flex flex-col gap-3 md:ml-3">
           {replies.map((reply) => (
             <Reply
               key={reply.createdAt || reply.updatedAt}
