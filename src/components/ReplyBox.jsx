@@ -11,6 +11,7 @@ const ReplyBox = ({ open, reply }) => {
     const text = e.target.reply.value;
 
     await postReply({ text });
+    e.target.reset();
   };
 
   const handleChange = (e) => {

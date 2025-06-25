@@ -50,7 +50,7 @@ const CommentBox = ({ comment }) => {
           <button onClick={() => setOpen(!open)}>Reply</button>
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 ml-3">
+        <div className="mt-6 flex flex-col gap-3 md:ml-3">
           {replies.map((reply) => (
             <Reply
               key={reply.createdAt || reply.updatedAt}

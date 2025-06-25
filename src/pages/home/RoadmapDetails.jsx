@@ -100,6 +100,7 @@ const RoadmapDetails = () => {
     };
 
     await postComment(data);
+    e.target.reset();
   };
 
   const handleChange = (e) => {
@@ -112,11 +113,30 @@ const RoadmapDetails = () => {
 
   return (
     <section className="section">
-      <div className="max-w-2xl mx-auto border p-6 rounded-md">
+      <div className="max-w-2xl mx-auto border p-3 md:p-6 rounded-md">
         <h3 className="font-semibold">{title}</h3>
         {description && <p className="mt-4">{description}</p>}
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex gap-2 items-center mt-6">
+          <p className="capitalize bg-main w-fit px-3 py-0.5 text-white rounded-full">
+            {category}
+          </p>
+          <p
+            className={`capitalize ${
+              status === "planned"
+                ? "bg-red-600"
+                : status === "in_progress"
+                ? "bg-blue-700"
+                : "bg-sec"
+            } w-fit px-3 py-0.5 text-white rounded-full`}
+          >
+            {status === "in_progress" ? "In Progress" : status}
+          </p>
+        </div>
+
+        <hr className="my-6" />
+
+        <div className="flex items-center justify-around mt-4">
           <p className="flex items-center gap-4">
             <span className="bg-sec w-6 h-6 rounded-full flex-center">
               {upvotes.length}
@@ -135,28 +155,10 @@ const RoadmapDetails = () => {
           >
             <FaCommentAlt size={28} className="text-main" />
           </button>
-
-          <div className="flex gap-4 items-center">
-            <p className="capitalize bg-main w-fit px-3 py-0.5 text-white rounded-full">
-              {category}
-            </p>
-            <p
-              className={`capitalize ${
-                status === "planned"
-                  ? "bg-red-600"
-                  : status === "in_progress"
-                  ? "bg-blue-700"
-                  : "bg-sec"
-              } w-fit px-3 py-0.5 text-white rounded-full`}
-            >
-              {status === "in_progress" ? "In Progress" : status}
-            </p>
-          </div>
         </div>
 
         {/* comment section */}
-        <hr className="my-6" />
-        <div>
+        <div className="mt-6">
           <form onSubmit={handleComment}>
             <div className="flex justify-between">
               <input
@@ -184,7 +186,7 @@ const RoadmapDetails = () => {
           open ? "h-fit block" : "h-0 hidden"
         }`}
       >
-        <div className="p-6">
+        <div className="p-3 md:p-6">
           <h2 className="font-bold text-2xl">
             Comments: {comments.length || 0}
           </h2>
