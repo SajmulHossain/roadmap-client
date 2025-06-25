@@ -1,7 +1,9 @@
 import { formatDistanceToNowStrict } from "date-fns";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const Reply = ({ reply, setOpen }) => {
   const { author, text, createdAt } = reply || {};
+  
   return (
     <div className="flex gap-4">
       <div>
@@ -15,7 +17,7 @@ const Reply = ({ reply, setOpen }) => {
         <div className="ml-4 flex gap-4 items-center text-sm mt-1 text-gray-600">
           <p>{formatDistanceToNowStrict(new Date(createdAt))} ago</p>
 
-          <button onClick={() => setOpen(!open)}>Reply</button>
+          <button onClick={() => setOpen((open) => !open)}>Reply</button>
         </div>
       </div>
     </div>

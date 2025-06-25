@@ -87,6 +87,7 @@ const RoadmapDetails = () => {
     );
   }
 
+
   const handleComment = async (e) => {
     e.preventDefault();
 
