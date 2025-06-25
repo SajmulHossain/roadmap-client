@@ -38,27 +38,14 @@ const Roadmap = ({ roadmap }) => {
 
   return (
     <div className="rounded-md border p-4 flex flex-col justify-between">
-      <Link to={`/roadmap/${_id}`}>
+      <Link
+        to={`/roadmap/${_id}`}
+        className="flex flex-1 flex-col justify-between"
+      >
         <h3 className="font-bold text-2xl mb-4">{title}</h3>
         {description && <p className="mb-3">{description}</p>}
-        <hr className="my-4" />
-      </Link>
 
-      <div className="flex items-center justify-between">
-        <p className="flex items-center gap-4">
-          <span className="bg-sec w-6 h-6 rounded-full flex-center">
-            {upvotes.length}
-          </span>
-          <button ref={btnRef} disabled={!!isVoted} onClick={handleVote}>
-            {isPending ? <Loading /> : <MdHowToVote size={30} />}
-          </button>
-        </p>
-
-        <button className="hidden lg:block">
-          <FaCommentAlt size={28} className="text-main" />
-        </button>
-
-        <div className="flex gap-1 lg:gap-4 items-center">
+        <div className="flex gap-2 items-center mt-auto">
           <p className="capitalize bg-main w-fit px-3 py-0.5 text-white rounded-full">
             {category}
           </p>
@@ -74,6 +61,22 @@ const Roadmap = ({ roadmap }) => {
             {status === "in_progress" ? "In Progress" : status}
           </p>
         </div>
+        <hr className="my-4" />
+      </Link>
+
+      <div className="flex items-center justify-around">
+        <p className="flex items-center gap-2">
+          <span className="bg-sec w-6 h-6 rounded-full flex-center">
+            {upvotes.length}
+          </span>
+          <button ref={btnRef} disabled={!!isVoted} onClick={handleVote}>
+            {isPending ? <Loading /> : <MdHowToVote size={30} />}
+          </button>
+        </p>
+
+        <Link to={`/roadmap/${_id}`}>
+          <FaCommentAlt size={28} className="text-main" />
+        </Link>
       </div>
     </div>
   );
