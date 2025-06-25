@@ -66,7 +66,7 @@ const RoadmapDetails = () => {
       });
       toast.success(data?.message);
       btnRef.current.disabled = true;
-      queryClient.invalidateQueries({ queryKey: ["roadmaps"] });
+      queryClient.invalidateQueries({ queryKey: ["roadmap"] });
     },
     onError: (err) => {
       toast.error(err.response.data.message || "Something went wrong");

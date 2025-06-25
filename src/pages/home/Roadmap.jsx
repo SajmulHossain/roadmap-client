@@ -37,12 +37,12 @@ const Roadmap = ({ roadmap }) => {
   const isVoted = upvotes.find((vote) => vote.user === user?.email);
 
   return (
-    <Link
-      to={`/roadmap/${_id}`}
-      className="rounded-md border p-4 flex flex-col justify-between"
-    >
-      <h3 className="font-bold text-2xl mb-4">{title}</h3>
-      {description && <p className="mb-3">{description}</p>}
+    <div className="rounded-md border p-4 flex flex-col justify-between">
+      <Link to={`/roadmap/${_id}`}>
+        <h3 className="font-bold text-2xl mb-4">{title}</h3>
+        {description && <p className="mb-3">{description}</p>}
+        <hr className="my-4" />
+      </Link>
 
       <div className="flex items-center justify-between">
         <p className="flex items-center gap-4">
@@ -75,7 +75,7 @@ const Roadmap = ({ roadmap }) => {
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
