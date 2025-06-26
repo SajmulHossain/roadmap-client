@@ -15,6 +15,7 @@ const CommentBox = ({ comment }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const [openOpt, setOpenOpt] = useState(false);
+  const optBtnRef = useRef(null);
   const optRef = useRef(null);
 
   const { author, createdAt, text, replies, _id } = comment || {};
@@ -42,7 +43,7 @@ const CommentBox = ({ comment }) => {
   const handleClick = (e) => {
     if (
       !(
-        optRef.current?.contains(e.target)
+        optBtnRef.current?.contains(e.target) || optRef.current?.contains(e.target)
       )
     ) {
       setOpenOpt(false);
@@ -86,6 +87,7 @@ const CommentBox = ({ comment }) => {
               key={reply.createdAt || reply.updatedAt}
               reply={reply}
               setOpen={setOpen}
+              open={open}
               isDisabled={replies.length >= 3}
             />
           ))}
@@ -97,12 +99,13 @@ const CommentBox = ({ comment }) => {
             <button
               onClick={() => setOpenOpt(!openOpt)}
               className="absolute top-4 right-3"
-              ref={optRef}
+              ref={optBtnRef}
             >
               <BsThreeDotsVertical />
             </button>
             {openOpt && (
               <div
+              ref={optRef}
                 className={`absolute top-2 right-8 space-y-2 bg-main p-2 rounded-md`}
               >
                 <button className="btn w-full border-none bg-sec">Edit</button>

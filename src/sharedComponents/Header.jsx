@@ -62,7 +62,7 @@ const Header = () => {
     </>
   );
   return (
-    <header className="bg-black text-white py-3 sticky top-0">
+    <header className="bg-black text-white py-3 sticky z-50 top-0">
       <section className="section py-0 my-0 flex justify-between">
         <div className="flex flex-row-reverse gap-1 sm:gap-4 items-center">
           <h3>Roadmap App</h3>

@@ -2,10 +2,36 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
+import { useEffect, useRef, useState } from "react";
+import ReplyBox from "./ReplyBox";
 
-const Reply = ({ reply, setOpen, isDisabled }) => {
-  const {user} = useAuth();
+const Reply = ({ reply, setOpen, isDisabled, open }) => {
+  const { user } = useAuth();
   const { author, text, createdAt } = reply || {};
+  const optBtnRef = useRef(null);
+  const optRef = useRef(null);
+  const [openOpt, setOpenOpt] = useState(false);
+
+  const handleClick = (e) => {
+    if (
+      !(
+        optBtnRef.current?.contains(e.target) ||
+        optRef.current?.contains(e.target)
+      )
+    ) {
+      setOpenOpt(false);
+    }
+  };
+
+  useEffect(() => {
+    if (openOpt) {
+      document.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [openOpt]);
 
   return (
     <div className="flex gap-4 relative">
@@ -30,11 +56,28 @@ const Reply = ({ reply, setOpen, isDisabled }) => {
         </div>
       </div>
 
-      {user?._id === author._id && (
+      {user?._id === author?._id && (
         <>
-          <button className="absolute top-4 right-3">
+          <button
+            onClick={() => setOpenOpt(!openOpt)}
+            className="absolute top-4 right-3"
+            ref={optBtnRef}
+          >
             <BsThreeDotsVertical />
           </button>
+          {openOpt && (
+            <>
+            <div
+              ref={optRef}
+              className={`absolute top-2 right-8 space-y-2 bg-main p-2 rounded-md`}
+            >
+              <button onClick={() => setOpen(!open)} className="btn w-full border-none bg-sec">Edit</button>
+              <button className="btn w-full border-none bg-amber-600">
+                Delete
+              </button>
+            </div>
+              </>
+          )}
         </>
       )}
     </div>
