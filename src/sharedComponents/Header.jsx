@@ -87,8 +87,8 @@ const Header = () => {
 
           <ul
             ref={navRef}
-            className={`absolute top-12 h-screen px-10 z-50 py-6 ${
-              open ? "left-0" : "right-full"
+            className={`absolute left-0 top-12 h-screen px-10 z-50 py-6 ${
+              open ? "translate-x-0" : "-translate-x-full"
             } transition duration-200 ease-in bg-main`}
           >
             {links}
