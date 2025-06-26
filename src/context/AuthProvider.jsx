@@ -11,15 +11,15 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-      const { data } = await axiosSecure("/auth");
-      setUser(data.data);
-    } catch (error) {
-      toast.error(error?.response?.data?.message || "Something went wrong!");
-    } finally {
+        const { data } = await axiosSecure("/auth");
+        setUser(data.data);
+      } catch (error) {
+        toast.error(error?.response?.data?.message || "Something went wrong!");
+      } finally {
         setLoading(false);
       }
     };
-    
+
     fetchUser();
   }, [axiosSecure]);
 
