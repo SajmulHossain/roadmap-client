@@ -21,12 +21,14 @@ const Header = () => {
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClick);
+    if (open) {
+      document.addEventListener("click", handleClick);
+    }
 
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, []);
+  }, [open]);
 
   const links = (
     <>
@@ -83,14 +85,17 @@ const Header = () => {
           </div>
         )}
 
-        <ul
-          ref={navRef}
-          className={`absolute top-12 bg-black h-screen px-10 z-50 py-6 ${
-            open ? "left-0" : "right-full"
-          } transition duration-200 ease-in`}
-        >
-          {links}
-        </ul>
+          <ul
+            ref={navRef}
+            className={`absolute top-12 h-screen px-10 z-50 py-6 ${
+              open ? "left-0" : "right-full"
+            } transition duration-200 ease-in bg-main`}
+          >
+            {links}
+          </ul>
+          {open && (
+            <div className="absolute top-12 left-0 bg-black/60 w-full h-screen"></div>
+          )}
       </section>
     </header>
   );
