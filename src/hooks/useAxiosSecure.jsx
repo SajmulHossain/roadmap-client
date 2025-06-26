@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { Navigate } from "react-router";
-import localUser from "../utils/setUser";
 
 export const axiosSecure = axios.create({
   baseURL: import.meta.env.PROD
@@ -19,7 +18,6 @@ const useAxiosSecure = () => {
       async (error) => {
         if (error.response?.status === 401 || error.response?.status === 403) {
           await axiosSecure("/auth/logout");
-          localUser(false);
           <Navigate to="/auth/login" relative="true" />;
         }
         return Promise.reject(error);

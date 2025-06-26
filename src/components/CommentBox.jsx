@@ -1,5 +1,5 @@
 import { formatDistanceToNowStrict } from "date-fns";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReplyBox from "./ReplyBox";
 import { FaRegUserCircle } from "react-icons/fa";
 import Reply from "./Reply";
@@ -15,6 +15,7 @@ const CommentBox = ({ comment }) => {
   const queryClient = useQueryClient();
   const { user } = useAuth();
   const [openOpt, setOpenOpt] = useState(false);
+  const optRef = useRef(null);
 
   const { author, createdAt, text, replies, _id } = comment || {};
 
@@ -37,6 +38,26 @@ const CommentBox = ({ comment }) => {
       );
     },
   });
+
+  const handleClick = (e) => {
+    if (
+      !(
+        optRef.current?.contains(e.target)
+      )
+    ) {
+      setOpenOpt(false);
+    }
+  };
+
+  useEffect(() => {
+    if (openOpt) {
+      document.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClick);
+    };
+  }, [openOpt]);
   return (
     <div className="flex gap-4 border p-2 md:p-3 rounded-md">
       <div>
@@ -76,6 +97,7 @@ const CommentBox = ({ comment }) => {
             <button
               onClick={() => setOpenOpt(!openOpt)}
               className="absolute top-4 right-3"
+              ref={optRef}
             >
               <BsThreeDotsVertical />
             </button>
