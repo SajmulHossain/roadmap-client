@@ -1,9 +1,8 @@
 import { formatDistanceToNowStrict } from "date-fns";
+import { useEffect, useRef, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaRegUserCircle } from "react-icons/fa";
 import useAuth from "../hooks/useAuth";
-import { useEffect, useRef, useState } from "react";
-import ReplyBox from "./ReplyBox";
 
 const Reply = ({ reply, setOpen, isDisabled, open }) => {
   const { user } = useAuth();

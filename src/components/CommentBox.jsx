@@ -8,6 +8,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import Loading from "./Loading";
 
 const CommentBox = ({ comment }) => {
   const [open, setOpen] = useState(false);
@@ -29,8 +30,8 @@ const CommentBox = ({ comment }) => {
         author: user?._id,
       });
     },
-    onSuccess:async () => {
-     await queryClient.invalidateQueries({ queryKey: ["comments"] });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["comments"] });
       setOpen(false);
     },
     onError: (error) => {
@@ -40,10 +41,28 @@ const CommentBox = ({ comment }) => {
     },
   });
 
+  const {mutateAsync: deleteComment, isPending:isDeleting} = useMutation({
+    mutationKey: ["comment"],
+    mutationFn: async () => {
+      const { data } = await axiosSecure.delete(`/comments/${_id}`);
+      if (data.success) {
+        toast.success("Comment Deleted Successfully");
+        queryClient.invalidateQueries({ queryKey: ["comments"] });
+      }
+    },
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message ||
+          "Something went wrong while deleting comment."
+      );
+    },
+  });
+
   const handleClick = (e) => {
     if (
       !(
-        optBtnRef.current?.contains(e.target) || optRef.current?.contains(e.target)
+        optBtnRef.current?.contains(e.target) ||
+        optRef.current?.contains(e.target)
       )
     ) {
       setOpenOpt(false);
@@ -105,12 +124,16 @@ const CommentBox = ({ comment }) => {
             </button>
             {openOpt && (
               <div
-              ref={optRef}
-                className={`absolute top-2 right-8 space-y-2 bg-main p-2 rounded-md`}
+                ref={optRef}
+                className={`absolute top-2 w-32 right-8 space-y-2 bg-main p-2 rounded-md`}
               >
                 <button className="btn w-full border-none bg-sec">Edit</button>
-                <button className="btn w-full border-none bg-amber-600">
-                  Delete
+                <button
+                disabled={isDeleting}
+                  onClick={deleteComment}
+                  className="btn w-full border-none bg-amber-600"
+                >
+                   {isDeleting ? <Loading /> : "Delete"}
                 </button>
               </div>
             )}
