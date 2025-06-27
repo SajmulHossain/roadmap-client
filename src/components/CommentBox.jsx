@@ -18,6 +18,7 @@ const CommentBox = ({ comment }) => {
   const [openOpt, setOpenOpt] = useState(false);
   const optBtnRef = useRef(null);
   const optRef = useRef(null);
+  const [edit, setEdit] = useState(false);
 
   const { author, createdAt, text, replies, _id } = comment || {};
 
@@ -84,23 +85,36 @@ const CommentBox = ({ comment }) => {
         <FaRegUserCircle size={40} />
       </div>
       <div className="w-full relative">
-        <div className="w-full bg-main/20 p-3 rounded-2xl">
-          <h3 className="font-semibold">{author?.name}</h3>
-          <p className="text-base mt-1">{text}</p>
-        </div>
-        <div className="ml-4 flex gap-4 items-center text-sm mt-1 text-gray-600">
-          <p>{formatDistanceToNowStrict(new Date(createdAt))} ago</p>
+        {edit ? (
+          <>
+          <ReplyBox edit={edit} /> 
+          <button className="text-xs text-main hover:underline" onClick={() => setEdit(!edit)}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <div className="w-full bg-main/20 p-3 rounded-2xl">
+              <h3 className="font-semibold">{author?.name}</h3>
+              <p className="text-base mt-1">{text}</p>
+            </div>
+            <div className="ml-4 flex gap-4 items-center text-sm mt-1 text-gray-600">
+              <p>{formatDistanceToNowStrict(new Date(createdAt))} ago</p>
 
-          <button
-            disabled={replies.length >= 3}
-            onClick={() => setOpen(!open)}
-            className={`${replies.length >= 3 ? "line-through" : ""}`}
-          >
-            Reply
-          </button>
-        </div>
+              <button
+                disabled={replies.length >= 3}
+                onClick={() => setOpen(!open)}
+                className={`${replies.length >= 3 ? "line-through" : ""}`}
+              >
+                Reply
+              </button>
+            </div>
+          </>
+        )}
 
-        <div className="flex mt-4 flex-col gap-3 md:ml-3">
+        <div
+          className={`${
+            replies?.length > 0 ? "mt-4 flex" : "mt-0 hidden"
+          } flex-col gap-3 md:ml-3`}
+        >
           {replies.map((reply) => (
             <Reply
               key={reply.createdAt || reply.updatedAt}
@@ -127,13 +141,18 @@ const CommentBox = ({ comment }) => {
                 ref={optRef}
                 className={`absolute top-2 w-32 right-8 space-y-2 bg-main p-2 rounded-md`}
               >
-                <button className="btn w-full border-none bg-sec">Edit</button>
                 <button
-                disabled={isDeleting}
+                  onClick={() => setEdit(!edit)}
+                  className="btn w-full border-none bg-sec"
+                >
+                  Edit
+                </button>
+                <button
+                  disabled={isDeleting}
                   onClick={deleteComment}
                   className="btn w-full border-none bg-amber-600"
                 >
-                   {isDeleting ? <Loading /> : "Delete"}
+                  {isDeleting ? <Loading /> : "Delete"}
                 </button>
               </div>
             )}

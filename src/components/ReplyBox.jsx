@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { IoSend } from "react-icons/io5";
 import Loading from "./Loading";
 
-const ReplyBox = ({ open, reply }) => {
+const ReplyBox = ({ open, reply, edit }) => {
   const sendRef = useRef(null);
   const { postReply, isReplying } = reply || {};
 
@@ -23,15 +23,20 @@ const ReplyBox = ({ open, reply }) => {
     }
   };
   return (
-    <div className={`mt-3 ${open ? "block" : "hidden"}`}>
+    <div
+      className={`${edit ? "mt-0" : "mt-3"} ${
+        open || edit ? "block" : "hidden"
+      }`}
+    >
       <form onSubmit={handleReply}>
         <div className="flex justify-between">
           <input
             className="input rounded-r-none"
             type="text"
             name="reply"
-            placeholder="Leave a comment"
+            placeholder={edit ? "Edit" : "Reply"}
             onChange={handleChange}
+            defaultValue={reply?.value}
           />
           <button
             type="submit"
