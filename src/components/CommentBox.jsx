@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import useAuth from "../hooks/useAuth";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Loading from "./Loading";
+import EditBox from "./EditBox";
 
 const CommentBox = ({ comment }) => {
   const [open, setOpen] = useState(false);
@@ -42,7 +43,8 @@ const CommentBox = ({ comment }) => {
     },
   });
 
-  const {mutateAsync: deleteComment, isPending:isDeleting} = useMutation({
+  // * comment delete
+  const { mutateAsync: deleteComment, isPending: isDeleting } = useMutation({
     mutationKey: ["comment"],
     mutationFn: async () => {
       const { data } = await axiosSecure.delete(`/comments/${_id}`);
@@ -56,6 +58,20 @@ const CommentBox = ({ comment }) => {
         error?.response?.data?.message ||
           "Something went wrong while deleting comment."
       );
+    },
+  });
+
+  // * edit comment
+  const { mutateAsync: editComment, isPending: isEditing } = useMutation({
+    mutationKey: ["Comment", _id],
+    mutationFn: async (body) => {
+      const { data } = await axiosSecure.patch(`/comments/${_id}`, body);
+      toast.success(data?.message);
+      queryClient.invalidateQueries({ queryKey: ["comment", _id] });
+    },
+    onError: (error) => {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
     },
   });
 
@@ -87,8 +103,13 @@ const CommentBox = ({ comment }) => {
       <div className="w-full relative">
         {edit ? (
           <>
-          <ReplyBox edit={edit} /> 
-          <button className="text-xs text-main hover:underline" onClick={() => setEdit(!edit)}>Cancel</button>
+            <EditBox open={edit} setOpen={setEdit} data={[editComment, isEditing]} text={text} />
+            <button
+              className="text-xs text-main hover:underline"
+              onClick={() => setEdit(!edit)}
+            >
+              Cancel
+            </button>
           </>
         ) : (
           <>
@@ -126,7 +147,7 @@ const CommentBox = ({ comment }) => {
           ))}
         </div>
 
-        <ReplyBox open={open} reply={{ postReply, isReplying }} />
+        <ReplyBox open={open} setOpen={setOpen} reply={{ postReply, isReplying }} />
         {user?._id === author?._id && (
           <>
             <button

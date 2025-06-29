@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { IoSend } from "react-icons/io5";
 import Loading from "./Loading";
 
-const ReplyBox = ({ open, reply, edit }) => {
+const ReplyBox = ({ open, setOpen, reply, edit }) => {
   const sendRef = useRef(null);
   const { postReply, isReplying } = reply || {};
 
@@ -23,8 +23,7 @@ const ReplyBox = ({ open, reply, edit }) => {
     }
   };
   return (
-    <div
-      className={`${edit ? "mt-0" : "mt-3"} ${
+    <div className={`${edit ? "mt-16" : "mt-3"} ${
         open || edit ? "block" : "hidden"
       }`}
     >
@@ -48,6 +47,8 @@ const ReplyBox = ({ open, reply, edit }) => {
           </button>
         </div>
       </form>
+
+      <button onClick={() => setOpen(false)} className="text-xs hover:underline text-main">Cancel</button>
     </div>
   );
 };
