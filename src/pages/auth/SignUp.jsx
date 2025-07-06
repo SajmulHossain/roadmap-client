@@ -4,10 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import useAuth from "../../hooks/useAuth";
 import Loading from "../../components/Loading";
+import { setLocalUser } from "../../utils/localState";
 
 const SignUp = () => {
     const axiosSecure = useAxiosSecure();
-    const {user} = useAuth();
+    const {user, setUser} = useAuth();
     const navigate = useNavigate();
     const { mutateAsync, isPending } = useMutation({
       mutationKey: ["login"],
@@ -37,8 +38,10 @@ const SignUp = () => {
 
         try {
           const data = await mutateAsync(body);
+          setUser(data.data)
           toast.success(data?.message);
           navigate('/');
+          setLocalUser();
         } catch (error) {
           toast.error(error?.response?.data?.message || "Something Went Wrong");
         }

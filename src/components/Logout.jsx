@@ -6,6 +6,7 @@ import { axiosSecure } from "../hooks/useAxiosSecure";
 import Loading from "./Loading";
 import { useNavigate } from "react-router";
 import useAuth from "../hooks/useAuth";
+import { removeLocalUser } from "../utils/localState";
 
 const Logout = () => {
   const [click, setClick] = useState(false);
@@ -22,6 +23,7 @@ const Logout = () => {
           toast.success(data?.message);
           setUser(null);
           navigate("/auth/login");
+          removeLocalUser();
         }
         return data;
       } catch (error) {

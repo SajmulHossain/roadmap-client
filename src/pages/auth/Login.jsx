@@ -1,15 +1,15 @@
-import toast from "react-hot-toast";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useMutation } from "@tanstack/react-query";
-import { Link, Navigate, useLocation, useNavigate } from "react-router";
-import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { Link, Navigate, useNavigate } from "react-router";
 import Loading from "../../components/Loading";
+import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { setLocalUser } from "../../utils/localState";
 
 const Login = () => {
   const { setUser, user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const { state } = useLocation();
 
 
   const { mutateAsync, isPending } = useMutation({
@@ -40,7 +40,8 @@ const Login = () => {
       const data = await mutateAsync(body);
       toast.success(data?.message);
       setUser(data.data);
-      navigate(state || "/");
+      navigate("/");
+      setLocalUser();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something Went Wrong");
     }
@@ -79,7 +80,7 @@ const Login = () => {
             <hr />
             <p className="mt-2 text-sm">
               Don't have an account?{" "}
-              <Link className="hover:underline" to="/auth/sign-up">
+              <Link className="hover:underline" to="/auth/sign-up" >
                 Create Account
               </Link>
             </p>
