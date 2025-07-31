@@ -4,7 +4,6 @@ import { Link, Navigate, useNavigate } from "react-router";
 import Loading from "../../components/Loading";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { setLocalUser } from "../../utils/localState";
 
 const Login = () => {
   const { setUser, user } = useAuth();
@@ -41,7 +40,6 @@ const Login = () => {
       toast.success(data?.message);
       setUser(data.data);
       navigate("/");
-      setLocalUser();
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something Went Wrong");
     }
