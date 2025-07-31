@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import AuthContext from "./AuthContext";
-import toast from "react-hot-toast";
-import { getLocalUser } from "../utils/localState";
 
 const AuthProvider = ({ children }) => {
   const axiosSecure = useAxiosSecure();
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const haveUser = getLocalUser();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -22,13 +20,8 @@ const AuthProvider = ({ children }) => {
       }
     };
 
-    if (haveUser) {
-      fetchUser();
-    } else {
-      setUser(null);
-      setLoading(false);
-    }
-  }, [axiosSecure, haveUser]);
+   fetchUser();
+  }, [axiosSecure]);
 
   const data = {
     loading,
